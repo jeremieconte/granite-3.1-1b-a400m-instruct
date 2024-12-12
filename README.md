@@ -7,13 +7,13 @@ tags:
 - language
 - granite-3.1
 base_model:
-- ibm-granite/granite-3.1-1b-a400m-base
+- ibm-granite/Granite-3.1-1B-A400M-base
 ---
 
 # Granite-3.1-1B-A400M-Instruct
 
 **Model Summary:**
-Granite-3.1-1B-A400M-Instruct is an 1B parameter model finetuned from *Granite-3.1-1B-A400M-Base* using a combination of open source instruction datasets with permissive license and internally collected synthetic datasets. This model is developed using a diverse set of techniques with a structured chat format, including supervised finetuning, model alignment using reinforcement learning, and model merging.
+Granite-3.1-1B-A400M-Instruct is a 8B parameter long-context instruct model finetuned from Granite-3.1-8B-Base using a combination of open source instruction datasets with permissive license and internally collected synthetic datasets tailored for solving long context problems. This model is developed using a diverse set of techniques with a structured chat format, including supervised finetuning, model alignment using reinforcement learning, and model merging.
 
 - **Developers:** Granite Team, IBM
 - **GitHub Repository:** [ibm-granite/granite-3.1-language-models](https://github.com/ibm-granite/granite-3.1-language-models)
@@ -37,6 +37,7 @@ The model is designed to respond to general instructions and can be used to buil
 * Code related tasks
 * Function-calling tasks
 * Multilingual dialog use cases
+* Long-context tasks including long document/meeting summarization, long document QA, etc.
 
 **Generation:** 
 This is a simple example of how to use Granite-3.1-1B-A400M-Instruct model.
@@ -76,29 +77,29 @@ output = tokenizer.batch_decode(output)
 print(output)
 ```
 
-**Model Architecture:** 
-Granite-3.1-1B-A400M-Instruct is based on a decoder-only sparse Mixture of Experts (MoE) transformer architecture. Core components of this architecture are: Fine-grained Experts, Dropless Token Routing, and Load Balancing Loss.
+**Model Architecture:**
+Granite-3.1-1B-A400M-Instruct is based on a decoder-only dense transformer architecture. Core components of this architecture are: GQA and RoPE, MLP with SwiGLU, RMSNorm, and shared input/output embeddings.
 
-| Model                        | 2B Dense | 8B Dense | 1B MoE       | 3B MoE   |
-| :--------                    | :--------| :--------| :--------    |:-------- |
-| Embedding size               | 2048     | 4096     | **1024**     | 1536     |
-| Number of layers             | 40       | 40       | **24**       | 32       |
-| Attention head size          | 64       | 128      | **64**       | 64       |
-| Number of attention heads    | 32       | 32       | **16**       | 24       |
-| Number of KV heads           | 8        | 8        | **8**        | 8        |
-| MLP hidden size              | 8192     | 12800    | **512**      | 512      |
-| MLP activation               | SwiGLU   | SwiGLU   | **SwiGLU**   | SwiGLU   |
-| Number of experts            | —        | —        | **32**       | 40       |
-| MoE TopK                     | —        | —        | **8**        | 8        |
-| Initialization std           | 0.1      | 0.1      | **0.1**      | 0.1      |
-| Sequence length              | 128K     | 128K     | **128K**     | 128K     |
-| Position embedding           | RoPE     | RoPE     | **RoPE**     | RoPE     |
-| # Parameters                 | 2.5B     | 8.1B     | **1.3B**     | 3.3B     |
-| # Active parameters          | 2.5B     | 8.1B     | **400M**     | 800M     |
-| # Training tokens            | 12T      | 12T      | **10T**      | 10T      |
+| Model                     | 2B Dense | 8B Dense     | 1B MoE | 3B MoE |
+| :--------                 | :--------| :--------    | :------| :------|
+| Embedding size            | 2048     | **4096**     | 1024   | 1536   |
+| Number of layers          | 40       | **40**       | 24     | 32     |
+| Attention head size       | 64       | **128**      | 64     | 64     |
+| Number of attention heads | 32       | **32**       | 16     | 24     |
+| Number of KV heads        | 8        | **8**        | 8      | 8      |
+| MLP hidden size           | 8192     | **12800**    | 512    | 512    |
+| MLP activation            | SwiGLU   | **SwiGLU**   | SwiGLU | SwiGLU |
+| Number of experts         | —        | **—**        | 32     | 40     |
+| MoE TopK                  | —        | **—**        | 8      | 8      |
+| Initialization std        | 0.1      | **0.1**      | 0.1    | 0.1    |
+| Sequence length           | 128K     | **128K**     | 128K   | 128K   | 
+| Position embedding        | RoPE     | **RoPE**     | RoPE   | RoPE   |
+| # Parameters              | 2.5B     | **8.1B**     | 1.3B   | 3.3B   |
+| # Active parameters       | 2.5B     | **8.1B**     | 400M   | 800M   |
+| # Training tokens         | 12T      | **12T**      | 10T    | 10T    |
 
 **Training Data:** 
-Overall, our SFT data is largely comprised of three key sources: (1) publicly available datasets with permissive license, (2) internal synthetic data targeting specific capabilities, and (3) very small amounts of human-curated data. A detailed attribution of datasets can be found in the [Granite Technical Report]() and [Accompanying Author List]().
+Overall, our SFT data is largely comprised of three key sources: (1) publicly available datasets with permissive license, (2) internal synthetic data targeting specific capabilities including long-context tasks, and (3) very small amounts of human-curated data. A detailed attribution of datasets can be found in the [Granite 3.0 Technical Report](https://github.com/ibm-granite/granite-3.0-language-models/blob/main/paper.pdf), [Granite 3.1 Technical Report (coming soon)](https://huggingface.co/collections/ibm-granite/granite-31-language-models-6751dbbf2f3389bec5c6f02d), and [Accompanying Author List](https://github.com/ibm-granite/granite-3.0-language-models/blob/main/author-ack.pdf).
 
 **Infrastructure:**
 We train Granite 3.1 Language Models using IBM's super computing cluster, Blue Vela, which is outfitted with NVIDIA H100 GPUs. This cluster provides a scalable and efficient infrastructure for training our models over thousands of GPUs.
