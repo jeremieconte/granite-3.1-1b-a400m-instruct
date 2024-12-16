@@ -28,7 +28,7 @@
   "rope_theta": 1500000.0,
   "router_aux_loss_coef": 0.0,
   "tie_word_embeddings": true,
-  "torch_dtype": "float32",
+  "torch_dtype": "bfloat16",
   "transformers_version": "4.47.0",
   "use_cache": true,
   "vocab_size": 49155
