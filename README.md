@@ -107,6 +107,11 @@ We train Granite 3.1 Language Models using IBM's super computing cluster, Blue V
 **Ethical Considerations and Limitations:** 
 Granite 3.1 Instruct Models are primarily finetuned using instruction-response pairs mostly in English, but also multilingual data covering eleven languages. Although this model can handle multilingual dialog use cases, its performance might not be similar to English tasks. In such case, introducing a small number of examples (few-shot) can help the model in generating more accurate outputs. While this model has been aligned by keeping safety in consideration, the model may in some cases produce inaccurate, biased, or unsafe responses to user prompts. So we urge the community to use this model with proper safety testing and tuning tailored for their specific tasks.
 
+**Resources**
+- ⭐️ Learn about the latest updates with Granite: https://www.ibm.com/granite
+- 📄 Get started with tutorials, best practices, and prompt engineering advice: https://www.ibm.com/granite/docs/
+- 💡 Learn about the latest Granite learning resources: https://ibm.biz/granite-learning-resources
+
 <!-- ## Citation
 ```
 @misc{granite-models,
